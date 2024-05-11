@@ -1,23 +1,29 @@
-#MYIP=10.10.224.187
+#!/bin/bash
 
+# Pull Consul image
 docker pull consul:1.9.10
 
-docker run -d --name=consul-dev -p 8500:8500 consul:1.9.10
+# Run Consul container if it doesn't exist
+if [ ! "$(docker ps -q -f name=consul-dev)" ]; then
+    docker run -d --name=consul-dev -p 8500:8500 consul:1.9.10
+fi
 
-docker exec -it consul-dev sh
+# Wait for Consul container to start
+sleep 5
 
-consul kv put consul-dev/hazelcast_config '{"cluster_name": "hazelcast-cluster", "cluster_members": ["$(MYIP):5701", "$(MYIP):5702"], "message_queue": "msg"}' &
+# Get host IP address
+host_ip=$(hostname -I | cut -d' ' -f1)
 
-docker run \
-    -it \
-    --name node-1 --rm \
-    -e HZ_NETWORK_PUBLICADDRESS=10.10.224.187:5701 \
-    -e HZ_CLUSTERNAME=hazelcast-cluster \
-    -p 5701:5701 hazelcast/hazelcast:5.0 &
+# Set Consul key-value pair with correct IP addresses
+docker exec consul-dev consul kv put consul-dev/hazelcast_config "{\"cluster_name\": \"hazelcast-cluster\", \"cluster_members\": [\"$host_ip:5701\", \"$host_ip:5702\"], \"message_queue\": \"msg\"}"
 
-docker run \
-    -it \
-    --name node-2 --rm \
-    -e HZ_NETWORK_PUBLICADDRESS=10.10.224.187:5702 \
-    -e HZ_CLUSTERNAME=hazelcast-cluster \
-    -p 5702:5701 hazelcast/hazelcast:5.0
+# Run Hazelcast nodes if they don't exist
+if [ ! "$(docker ps -q -f name=node-1)" ]; then
+    docker run -d --name node-1 --rm -e HZ_NETWORK_PUBLICADDRESS=$host_ip:5701 -e HZ_CLUSTERNAME=hazelcast-cluster -p 5701:5701 hazelcast/hazelcast:5.0
+fi
+
+if [ ! "$(docker ps -q -f name=node-2)" ]; then
+    docker run -d --name node-2 --rm -e HZ_NETWORK_PUBLICADDRESS=$host_ip:5702 -e HZ_CLUSTERNAME=hazelcast-cluster -p 5702:5701 hazelcast/hazelcast:5.0
+fi
+
+echo "Services started successfully."
