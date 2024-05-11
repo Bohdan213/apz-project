@@ -4,6 +4,7 @@ from flask_restful import Api
 import consul
 from sqlalchemy import Column, Integer, String, ForeignKey, Table
 from sqlalchemy.orm import relationship, declarative_base, sessionmaker
+from sqlalchemy.dialects.mysql import JSON
 
 
 consul_client = consul.Consul()
@@ -29,23 +30,27 @@ Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
+
 class User(Base):
+
     __tablename__ = 'users'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    username = Column(String(50), unique=True, nullable=False)
+    user_token = Column(Integer, primary_key=True, autoincrement=True)
+    user_name = Column(String(50), unique=True, nullable=False)
     password = Column(String(50), unique=True, nullable=False)
-    groups = relationship('Group', secondary=user_group_association, back_populates='users')
 
     def __repr__(self):
         return f"<User(username={self.username}, email={self.email})>"
 
+
 class Group(Base):
+
     __tablename__ = 'groups'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(50), unique=True, nullable=False)
-    users = relationship('User', secondary=user_group_association, back_populates='groups')
+    creator_token = Column(Integer, ForeignKey('users.user_token'))
+    group_token = Column(Integer, primary_key=True)
+    group_name = Column(String(50), unique=True, nullable=False)
+    users_list = Column(JSON, nullable=False)
 
     def __repr__(self):
         return f"<Group(name={self.name})>"

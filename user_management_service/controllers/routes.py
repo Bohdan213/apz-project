@@ -1,9 +1,9 @@
 from flask_restful import Resource, reqparse
 
-from facade_service.services.facadeService import PostService, GetService
+from user_management_service.services.userService import PostService, GetService
 
 
-class FacadeService(Resource):
+class UserManagementService(Resource):
 
     def __init__(self):
         self.post_parser = reqparse.RequestParser()
@@ -13,8 +13,8 @@ class FacadeService(Resource):
 
 
     def post(self):
-        return PostService.post_message()
+        return None
 
 
     def get(self):
-        return GetService.get_messages()
+        return None

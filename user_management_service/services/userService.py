@@ -1,3 +1,6 @@
+from user_management_service.repository import dbManipulation
+
+
 class PostService:
 
     @staticmethod
@@ -20,9 +23,9 @@ class GetService:
         return "Get messages"
 
     @staticmethod
-    def get_users(group_token):
+    def get_group_users(group_token):
         return "Get messages"
 
     @staticmethod
-    def get_groups(user_token):
+    def get_user_groups(user_token):
         return "Get messages"
