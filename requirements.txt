@@ -1,0 +1,6 @@
+sqlalchemy
+flask
+flask_restful
+consul
+hazelcast
+psycopg2

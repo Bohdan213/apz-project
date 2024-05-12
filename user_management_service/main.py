@@ -1,5 +1,5 @@
-from facade_service import app_user_management, api_user_management, consul_client
-from facade_service.controllers.routes import UserManagementService
+from user_management_service import app_user_management, api_user_management, consul_client
+from user_management_service.controllers.routes import UserManagementService
 
 
 api_user_management.add_resource(UserManagementService, '/api/v1/user_management_service')
