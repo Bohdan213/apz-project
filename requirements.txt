@@ -4,3 +4,4 @@ flask_restful
 python-consul
 hazelcast
 psycopg2
+pymongo
