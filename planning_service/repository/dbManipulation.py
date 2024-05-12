@@ -1,4 +1,3 @@
-from user_management_service import session, User, Group
 import json
 
 
