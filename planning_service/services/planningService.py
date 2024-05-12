@@ -6,29 +6,37 @@ from global_classes import Request
 class PostService:
 
     @staticmethod
-    def create_event(event_description, user_list, group_token):
-        communicateWithDB.create_event(event_description, user_list, group_token)
-        queue_request = Request("planning", "event_invitation", user_list)
+    def create_event(creator_token, group_token, event_description, users_list, group_name, event_time):
+        event_id = communicateWithDB.create_event(creator_token, group_token, event_description,
+                                                  users_list, group_name, event_time)
+        queue_request = Request("planning", "event_invitation", users_list, event_id, group_name)
         messages_queue.put(queue_request)
-        return f"Event with description: {event_description} created and users: {user_list} added"
+        return {"event_id": event_id}
 
     @staticmethod
-    def cancel_event(event_id):
-        user_list = communicateWithDB.get_user_list(event_id)
-        communicateWithDB.cancel_event(event_id)
-        queue_request = Request("planning", "event_cancellation", user_list)
-        messages_queue.put(queue_request)
-        return f"Event with id: {event_id} cancelled"
+    def cancel_event(user_token, event_token):
+        user_list = communicateWithDB.get_user_list(event_token)
+        result, group_name = communicateWithDB.cancel_event(user_token, event_token)
+        if result:
+            queue_request = Request("planning", "event_cancellation", user_list, event_token, group_name)
+            messages_queue.put(queue_request)
+            return {"result": "success"}
+        return {"result": "failure"}
 
 
 class GetService:
 
     @staticmethod
-    def view_user_events(user_token):
-        user_events = communicateWithDB.view_user_events(user_token)
-        return user_events
+    def view_events_user_name(user_name):
+        event_tuples = communicateWithDB.view_user_events(user_name)
+        return event_tuples
 
     @staticmethod
-    def view_event_info(event_id):
-        event_info = communicateWithDB.view_event_info(event_id)
-        return event_info
+    def view_events_group(group_token):
+        event_tuples = communicateWithDB.view_events_group(group_token)
+        return event_tuples
+
+    @staticmethod
+    def view_events_creator(user_token):
+        event_tuples = communicateWithDB.view_events_creator(user_token)
+        return event_tuples
