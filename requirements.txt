@@ -1,6 +1,6 @@
 sqlalchemy
 flask
 flask_restful
-consul
+python-consul
 hazelcast
 psycopg2
