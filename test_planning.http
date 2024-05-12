@@ -1,0 +1,46 @@
+### Create Event
+POST http://localhost:8081/api/v1/planning_service/create_event
+Content-Type: application/json
+
+{
+  "user_token": "example_user_token",
+  "group_token": "example_group_token",
+  "description": "Corporate Team Meeting",
+  "users_list": [["test_user1", "email1"], ["test_user2", "email2"], ["test_user3", "email3"]],
+  "group_name": "Engineering",
+  "event_time": "2024-05-30T10:00:00Z",
+  "event_name": "Team Meeting"
+}
+
+### Cancel Event
+DELETE http://localhost:8081/api/v1/planning_service/cancel_event
+Content-Type: application/json
+
+{
+  "user_token": "example_user_token",
+  "event_token": "6640e579f6ff7d9ae7c08898"
+}
+
+### View Events by User Name
+GET http://localhost:8081/api/v1/planning_service/view_events_user_name
+Content-Type: application/json
+
+{
+  "user_name": "test_user1"
+}
+
+### View Events by Group
+GET http://localhost:8081/api/v1/planning_service/view_events_group
+Content-Type: application/json
+
+{
+  "group_token": "example_group_token"
+}
+
+### View Events by Creator (User Token)
+GET http://localhost:8081/api/v1/planning_service/view_events_creator
+Content-Type: application/json
+
+{
+  "user_token": "example_user_token"
+}

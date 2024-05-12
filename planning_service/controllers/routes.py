@@ -10,9 +10,10 @@ class PlanningService(Resource):
         self.post_parser.add_argument('user_token', required=True, help="User token is required")
         self.post_parser.add_argument('group_token', required=True, help="Group name is required")
         self.post_parser.add_argument('description', required=True, help="Description is required")
-        self.post_parser.add_argument('users_list', required=True, help="List of users", type=list)
+        self.post_parser.add_argument('users_list', required=True, help="List of users", type=list, location='json')
         self.post_parser.add_argument('group_name', required=True, help="Group name is required")
         self.post_parser.add_argument('event_time', required=True, help="Event time is required")
+        self.post_parser.add_argument('event_name', required=True, help="Event name is required")
 
         self.delete_parser = reqparse.RequestParser()
         self.delete_parser.add_argument('user_token', required=True, help="User token is required")
@@ -37,9 +38,10 @@ class PlanningService(Resource):
             users_list = args['users_list']
             group_name = args['group_name']
             event_time = args['event_time']
+            event_name = args['event_name']
 
             event_token = PostService.create_event(user_token, group_token, description,
-                                                   users_list, group_name, event_time)
+                                                   users_list, group_name, event_time, event_name)
             return {'event_token': event_token}, 200
         return None
 
@@ -48,13 +50,11 @@ class PlanningService(Resource):
             args = self.delete_parser.parse_args()
             user_token = args['user_token']
             event_token = args['event_token']
-            PostService.cancel_event(user_token, event_token)
-            return None, 200
+            return PostService.cancel_event(user_token, event_token)
         return None
 
-
     def get(self, operation=None):
-        if operation == "view_events_user_name":
+        if operation == "view_events_usÍer_name":
             args = self.view_events_user_name_parser.parse_args()
             user_name = args['user_name']
             events = GetService.view_events_user_name(user_name)

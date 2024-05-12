@@ -9,14 +9,17 @@ class PostService:
 
     @staticmethod
     def create_group(user_token, group_name, users_list):
+
         return communicateWithDB.create_group(creator_token=user_token, group_name=group_name, users_list=users_list)
 
     @staticmethod
     def add_user_to_group(group_token, user_name, creator_token):
+
         return communicateWithDB.add_user_to_group(group_token, user_name, creator_token)
 
     @staticmethod
     def delete_user_from_group(group_token, user_name, creator_token):
+
         return communicateWithDB.delete_user_from_group(group_token, user_name, creator_token)
 
 
@@ -53,4 +56,5 @@ class DeleteService:
 
     @staticmethod
     def delete_group(group_token, creator_token):
+
         return communicateWithDB.delete_group(group_token, creator_token)

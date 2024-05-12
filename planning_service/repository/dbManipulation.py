@@ -20,7 +20,7 @@ class communicateWithDB:
             "creator_token": creator_token,
             "group_token": group_token,
             "description": event_description,
-            "users_list": [{"user_name": user.user_name, "user_email": user.user_email} for user in users_list],
+            "users_list": [{"user_name": user[0], "user_email": user[1]} for user in users_list],
             "group_name": group_name,
             "event_time": event_time,
             "event_name": event_name
