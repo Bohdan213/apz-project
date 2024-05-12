@@ -1,5 +1,5 @@
 class User:
-    def __init__(self, user_token, user_name, user_email):
+    def __init__(self, user_name: str, user_email: str):
         self.user_name = user_name
         self.user_email = user_email
 
@@ -14,17 +14,18 @@ class User:
 
 
 class Request:
-    def __init__(self, source_service, request_type, request_data, event_id=None, group_id=None):
+    def __init__(self, source_service: str, request_type: str, request_data: dict):
         if not source_service in ["user_manadgement", "planning"]:
             raise ValueError("Invalid source service. Please provide either 'user_manadgement' or 'planning' as the source service.")
         if source_service == "user_manadgement" and not request_type in ["group_addition", "group_removal"]:
             raise ValueError("Invalid request type. Please provide either 'group_addition' or 'group_removal' as the request type.")
         if source_service == "planning" and not request_type in ['event_invitation', 'event_cancellation']:
             raise ValueError("Invalid request type. Please provide either 'event_invitation' or 'event_cancellation' as the request type.")
-        if not all(isinstance(user, User) for user in request_data):
+        if not all(isinstance(user, User) for user in request_data['users']):
             raise ValueError("Invalid request data. All request data should be instances of the User class.")
         self.source_service = source_service
         self.request_type = request_type
-        self.request_data = request_data
-        self.event_id = event_id
-        self.group_id = group_id
+        self.request_data = request_data['users']
+        self.event_name = request_data.get('event_name', None)
+        self.event_time = request_data.get('event_time', None)
+        self.group_name = request_data.get('group_name', None)
