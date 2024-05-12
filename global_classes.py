@@ -21,11 +21,11 @@ class Request:
             raise ValueError("Invalid request type. Please provide either 'group_addition' or 'group_removal' as the request type.")
         if source_service == "planning" and not request_type in ['event_invitation', 'event_cancellation']:
             raise ValueError("Invalid request type. Please provide either 'event_invitation' or 'event_cancellation' as the request type.")
-        if not all(isinstance(user, User) for user in request_data['users']):
+        if not all(isinstance(user, User) for user in request_data['users_list']):
             raise ValueError("Invalid request data. All request data should be instances of the User class.")
         self.source_service = source_service
         self.request_type = request_type
-        self.request_data = request_data['users']
+        self.users_list = request_data['users_list']
         self.event_name = request_data.get('event_name', None)
         self.event_time = request_data.get('event_time', None)
         self.group_name = request_data.get('group_name', None)

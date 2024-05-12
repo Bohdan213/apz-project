@@ -6,19 +6,20 @@ from global_classes import Request
 class PostService:
 
     @staticmethod
-    def create_event(creator_token, group_token, event_description, users_list, group_name, event_time):
+    def create_event(creator_token, group_token, event_description, users_list, group_name, event_time, event_name):
         event_id = communicateWithDB.create_event(creator_token, group_token, event_description,
-                                                  users_list, group_name, event_time)
-        queue_request = Request("planning", "event_invitation", users_list, event_id, group_name)
+                                                  users_list, group_name, event_time, event_name)
+        event_info = communicateWithDB.get_event_info(event_id)
+        queue_request = Request("planning", "event_invitation", event_info)
         messages_queue.put(queue_request)
         return {"event_id": event_id}
 
     @staticmethod
     def cancel_event(user_token, event_token):
-        user_list = communicateWithDB.get_user_list(event_token)
-        result, group_name = communicateWithDB.cancel_event(user_token, event_token)
+        event_info = communicateWithDB.get_event_info(event_token)
+        result = communicateWithDB.cancel_event(user_token, event_token)
         if result:
-            queue_request = Request("planning", "event_cancellation", user_list, event_token, group_name)
+            queue_request = Request("planning", "event_cancellation", event_info)
             messages_queue.put(queue_request)
             return {"result": "success"}
         return {"result": "failure"}

@@ -1,5 +1,6 @@
 import pymongo
 from bson.objectid import ObjectId
+from global_classes import User
 
 # MongoDB connection details
 MONGO_URI = "mongodb://localhost:27017"
@@ -14,14 +15,15 @@ users_collection = db["users"]
 
 class communicateWithDB:
     @staticmethod
-    def create_event(creator_token, group_token, event_description, users_list, group_name, event_time):
+    def create_event(creator_token, group_token, event_description, users_list, group_name, event_time, event_name):
         event_data = {
             "creator_token": creator_token,
             "group_token": group_token,
             "description": event_description,
             "users_list": [{"user_name": user.user_name, "user_email": user.user_email} for user in users_list],
             "group_name": group_name,
-            "event_time": event_time
+            "event_time": event_time,
+            "event_name": event_name
         }
         inserted_event = events_collection.insert_one(event_data)
         return str(inserted_event.inserted_id)
@@ -30,10 +32,9 @@ class communicateWithDB:
     def cancel_event(user_token, event_token):
         event = events_collection.find_one({"_id": ObjectId(event_token)})
         if event and event["creator_token"] == user_token:
-            group_name = event["group_name"]
             events_collection.delete_one({"_id": ObjectId(event_token)})
-            return True, group_name
-        return False, None
+            return True
+        return False
 
     @staticmethod
     def view_user_events(user_name):
@@ -54,8 +55,10 @@ class communicateWithDB:
         return event_tuples
 
     @staticmethod
-    def get_user_list(event_token):
+    def get_event_info(event_token):
         event = events_collection.find_one({"_id": ObjectId(event_token)})
-        if event:
-            return event["users_list"]
-        return []
+        event["event_id"] = str(event["_id"])
+        del event["_id"]
+        del event["creator_token"]
+        event["users_list"] = [User(user["user_name"], user["user_email"]) for user in event["users_list"]]
+        return event
