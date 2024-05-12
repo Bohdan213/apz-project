@@ -13,7 +13,7 @@ class User:
 
 
 class Request:
-    def __init__(self, source_service, request_type, request_data):
+    def __init__(self, source_service, request_type, request_data, event_id=None, group_id=None):
         if not source_service in ["user_manadgement", "planning"]:
             raise ValueError("Invalid source service. Please provide either 'user_manadgement' or 'planning' as the source service.")
         if source_service == "user_manadgement" and not request_type in ["group_addition", "group_removal"]:
@@ -25,3 +25,5 @@ class Request:
         self.source_service = source_service
         self.request_type = request_type
         self.request_data = request_data
+        self.event_id = event_id
+        self.group_id = group_id
