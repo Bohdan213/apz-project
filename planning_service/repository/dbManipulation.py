@@ -1,17 +1,20 @@
-import pymongo
 from bson.objectid import ObjectId
 from global_classes import User
+from pymongo import MongoClient
+from pymongo.errors import ConnectionFailure
 
-# MongoDB connection details
-MONGO_URI = "mongodb://localhost:27017"
+
+MONGO_URI = "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.5"
 DATABASE_NAME = "test"
 
-client = pymongo.MongoClient(MONGO_URI)
-db = client[DATABASE_NAME]
-
-events_collection = db["events"]
-users_collection = db["users"]
-
+try:
+    client = MongoClient(MONGO_URI)
+    db = client[DATABASE_NAME]
+    events_collection = db["events"]
+    users_collection = db["users"]
+    print("Connected to MongoDB")
+except ConnectionFailure:
+    print("Failed to connect to MongoDB")
 
 class communicateWithDB:
     @staticmethod

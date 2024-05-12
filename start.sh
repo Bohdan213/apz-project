@@ -13,7 +13,7 @@ sleep 5
 
 # Get host IP address
 #host_ip=$(hostname -I | cut -d' ' -f1)
-host_ip=10.10.224.187
+host_ip=192.168.1.93
 # Set Consul key-value pair with correct IP addresses
 docker exec consul-dev consul kv put consul-dev/hazelcast_config "{\"cluster_name\": \"hazelcast-cluster\", \"cluster_members\": [\"$host_ip:5701\", \"$host_ip:5702\"], \"message_queue\": \"msg\"}"
 

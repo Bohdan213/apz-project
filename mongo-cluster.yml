@@ -1,0 +1,21 @@
+# mongo-cluster.yml
+version: '3.8'
+
+services:
+  mongo1:
+    image: mongo:latest
+    container_name: mongo1
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_REPLICA_SET_NAME=rs0
+    command: ["--replSet", "rs0"]
+
+  mongo2:
+    image: mongo:latest
+    container_name: mongo2
+    ports:
+      - "27018:27017"
+    environment:
+      - MONGO_REPLICA_SET_NAME=rs0
+    command: ["--replSet", "rs0"]
