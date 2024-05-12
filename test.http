@@ -1,0 +1,86 @@
+### Add User
+POST http://localhost:8000/api/v1/user_management_service/add_user
+Content-Type: application/json
+
+{
+  "user_name": "test_user_3",
+  "password": "password",
+  "email": "fedia@gmail.com"
+}
+
+
+
+### Authenticate User
+GET http://localhost:8000/api/v1/user_management_service/authenticate
+Content-Type: application/json
+
+{
+  "user_name": "test_user_3",
+  "password": "password"
+}
+
+### Create Group
+POST http://localhost:8000/api/v1/user_management_service/create_group
+Content-Type: application/json
+
+{
+  "user_token": "e388eb2b-6510-4a75-93ce-bf27f94e1dd1",
+  "group_name": "New_Group_1",
+  "users_list": [
+    "test_user_1",
+    "test_user_2"
+  ]
+}
+
+### Add User to Group
+POST http://localhost:8000/api/v1/user_management_service/add_user_to_group
+Content-Type: application/json
+
+{
+  "group_token": "8fe36221-ef56-4424-aa2c-37ef995f6684",
+  "user_name": "test_user_3",
+  "user_token": "e388eb2b-6510-4a75-93ce-bf27f94e1dd1"
+}
+
+### Delete User from Group
+POST http://localhost:8000/api/v1/user_management_service/delete_user_from_group
+Content-Type: application/json
+
+{
+  "group_token": "8fe36221-ef56-4424-aa2c-37ef995f6684",
+  "user_name": "test_user_3",
+  "user_token": "e388eb2b-6510-4a75-93ce-bf27f94e1dd1"
+}
+
+### Delete Group
+DELETE http://localhost:8000/api/v1/user_management_service/delete_group
+Content-Type: application/json
+
+{
+  "group_token": "8fe36221-ef56-4424-aa2c-37ef995f6684",
+  "user_token": "e388eb2b-6510-4a75-93ce-bf27f94e1dd1"
+}
+
+### Delete User
+DELETE http://localhost:8000/api/v1/user_management_service/delete_user
+Content-Type: application/json
+
+{
+  "user_token": "1c19e942-253b-4163-b2f5-d4355b03741a"
+}
+
+### Get Group Users
+GET http://localhost:8000/api/v1/user_management_service/get_group_users
+Content-Type: application/json
+
+{
+  "group_token": "8fe36221-ef56-4424-aa2c-37ef995f6684"
+}
+
+### Check User Existence
+GET http://localhost:8000/api/v1/user_management_service/user_existance
+Content-Type: application/json
+
+{
+  "user_name": "test_user_3"
+}

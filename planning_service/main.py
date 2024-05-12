@@ -2,7 +2,7 @@ from planning_service import app_planning, api_planning, consul_client
 from planning_service.controllers.routes import PlanningService
 
 
-api_planning.add_resource(PlanningService, '/api/v1/planning_service')
+api_planning.add_resource(PlanningService, '/api/v1/planning_service/<string:operation>')
 
 
 if __name__ == "__main__":

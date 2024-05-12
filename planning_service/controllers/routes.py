@@ -69,4 +69,5 @@ class PlanningService(Resource):
             user_token = args['user_token']
             events = GetService.view_events_creator(user_token)
             return {'events': events}, 200
+
         return None

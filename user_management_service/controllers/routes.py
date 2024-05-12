@@ -12,14 +12,17 @@ class UserManagementService(Resource):
         self.group_parser = reqparse.RequestParser()
         self.group_parser.add_argument('user_token', required=True, help="User token is required")
         self.group_parser.add_argument('group_name', required=True, help="Group name is required")
-        self.group_parser.add_argument('users_list', required=True, help="List of users", type=list)
+        self.group_parser.add_argument(
+            'users_list', required=True, help="List of users is required", type=list, location='json')
 
         self.group_token_parser = reqparse.RequestParser()
         self.group_token_parser.add_argument('group_token', required=True, help="Group token is required")
+        self.group_token_parser.add_argument('user_token', required=True, help="User token is required")
 
         self.add_user_to_group_parser = reqparse.RequestParser()
         self.add_user_to_group_parser.add_argument('group_token', required=True, help="Group token is required")
         self.add_user_to_group_parser.add_argument('user_name', required=True, help="User name is required")
+        self.add_user_to_group_parser.add_argument('user_token', required=True, help="User token is required")
 
         self.add_user_parser = reqparse.RequestParser()
         self.add_user_parser.add_argument('user_name', required=True, help="Username is required")
@@ -36,9 +39,8 @@ class UserManagementService(Resource):
         self.user_existance_parser = reqparse.RequestParser()
         self.user_existance_parser.add_argument('user_name', required=True, help="Username is required")
 
-    def get(self, operation=None):
-        if operation is None:
-            # Handle authentication by default
+    def get(self, operation):
+        if operation == "authenticate":
             args = self.auth_parser.parse_args()
             user_name = args['user_name']
             password = args['password']
@@ -64,8 +66,8 @@ class UserManagementService(Resource):
             args = self.group_parser.parse_args()
             user_token = args['user_token']
             group_name = args['group_name']
-            users_list = args['users_list'] or []
-            _, group_token = PostService.create_group(user_token, group_name, users_list)[1]
+            users_list = args['users_list']
+            _, group_token = PostService.create_group(user_token, group_name, users_list)
             print(_)
             return {'group_token': group_token}, 201
 
@@ -73,14 +75,16 @@ class UserManagementService(Resource):
             args = self.add_user_to_group_parser.parse_args()
             group_token = args['group_token']
             user_name = args['user_name']
-            print(PostService.add_user_to_group(group_token, user_name, user_name))
+            creator_token = args['user_token']
+            print(PostService.add_user_to_group(group_token, user_name, creator_token))
             return "added", 200
 
         elif operation == "delete_user_from_group":
             args = self.add_user_to_group_parser.parse_args()
             group_token = args['group_token']
             user_name = args['user_name']
-            print(PostService.delete_user_from_group(group_token, user_name, user_name))
+            user_token = args['user_token']
+            print(PostService.delete_user_from_group(group_token, user_name, user_token))
             return "deleted", 200
 
         elif operation == "add_user":

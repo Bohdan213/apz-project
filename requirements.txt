@@ -1,4 +1,4 @@
-sqlalchemy
+flask_sqlalchemy
 flask
 flask_restful
 python-consul

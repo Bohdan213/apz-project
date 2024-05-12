@@ -29,6 +29,7 @@ class GetService:
             return False
         if user.password == password:
             return user.user_token
+        return False
 
     @staticmethod
     def get_group_users(group_token):
