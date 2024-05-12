@@ -1,15 +1,16 @@
 class User:
     def __init__(self, user_token, user_name, user_email):
-        self.user_token = user_token
         self.user_name = user_name
         self.user_email = user_email
 
     def __str__(self):
-        return f"User token: {self.user_token}, User Name: {self.user_name}, User Email: {self.user_email}"
+        return f"User Name: {self.user_name}, User Email: {self.user_email}"
 
     def __repr__(self):
-        return f"User token: {self.user_token}, User Name: {self.user_name}, User Email: {self.user_email}"
+        return f"User Name: {self.user_name}, User Email: {self.user_email}"
 
+    def __eq__(self, other):
+        return self.user_name == other.user_name
 
 
 class Request:
