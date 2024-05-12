@@ -3,12 +3,14 @@ from flask_restful import Api
 import consul
 from flask_sqlalchemy import SQLAlchemy
 from user_management_service.services.utils import get_config, get_client
+from communication_service.controllers.queue import QueueWriter
 
 consul_client = consul.Consul()
 
 hazelcast_config = get_config(consul_client, "consul-dev/hazelcast_config")
 hazelcast_client = get_client(hazelcast_config)
 messages_queue = hazelcast_client.get_queue(hazelcast_config["message_queue"]).blocking()
+queue_writer = QueueWriter(messages_queue)
 
 app_user_management = Flask(__name__)
 api_user_management = Api(app_user_management)

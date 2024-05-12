@@ -1,5 +1,5 @@
 from user_management_service.repository.dbManipulation import communicateWithDB
-
+from messageCommunication import UserGroupNotifier
 
 class PostService:
 
@@ -9,17 +9,20 @@ class PostService:
 
     @staticmethod
     def create_group(user_token, group_name, users_list):
-
+        notifier = UserGroupNotifier(users_list, group_name)
+        notifier.notify_addition()
         return communicateWithDB.create_group(creator_token=user_token, group_name=group_name, users_list=users_list)
 
     @staticmethod
     def add_user_to_group(group_token, user_name, creator_token):
-
+        notifier = UserGroupNotifier([user_name], communicateWithDB.get_group(group_token).group_name)
+        notifier.notify_addition()
         return communicateWithDB.add_user_to_group(group_token, user_name, creator_token)
 
     @staticmethod
     def delete_user_from_group(group_token, user_name, creator_token):
-
+        notifier = UserGroupNotifier([user_name], communicateWithDB.get_group(group_token).group_name)
+        notifier.notify_removal()
         return communicateWithDB.delete_user_from_group(group_token, user_name, creator_token)
 
 
@@ -56,5 +59,6 @@ class DeleteService:
 
     @staticmethod
     def delete_group(group_token, creator_token):
-
+        notifier = UserGroupNotifier(communicateWithDB.get_group_users(group_token), communicateWithDB.get_group(group_token).group_name)
+        notifier.notify_removal()
         return communicateWithDB.delete_group(group_token, creator_token)

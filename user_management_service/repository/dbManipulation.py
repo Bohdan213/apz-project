@@ -99,6 +99,14 @@ class communicateWithDB:
             return f"Error: {e}"
 
     @staticmethod
+    def get_group(group_token):
+        try:
+            group = Group.query.filter_by(group_token=group_token).first()
+            return group
+        except Exception as e:
+            return f"Error: {e}"
+
+    @staticmethod
     def get_user_groups(user_token):
         try:
             groups = Group.query.filter_by(creator_token=user_token).all()
