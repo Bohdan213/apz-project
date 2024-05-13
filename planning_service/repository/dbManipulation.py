@@ -17,6 +17,23 @@ except ConnectionFailure:
     print("Failed to connect to MongoDB")
 
 class communicateWithDB:
+    """
+    A class that provides methods for communicating with the database.
+
+    Methods:
+        create_event(creator_token, group_token, event_description, users_list, group_name, event_time, event_name):
+            Creates a new event in the database.
+        cancel_event(user_token, event_token):
+            Cancels an event in the database.
+        view_user_events(user_name):
+            Retrieves events associated with a specific user.
+        view_events_group(group_token):
+            Retrieves events associated with a specific group.
+        view_events_creator(user_token):
+            Retrieves events created by a specific user.
+        get_event_info(event_token):
+            Retrieves detailed information about a specific event.
+    """
     @staticmethod
     def create_event(creator_token, group_token, event_description, users_list, group_name, event_time, event_name):
         event_data = {
