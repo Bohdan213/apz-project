@@ -15,9 +15,9 @@ class User:
 
 class Request:
     def __init__(self, source_service: str, request_type: str, request_data: dict):
-        if not source_service in ["user_manadgement", "planning"]:
-            raise ValueError("Invalid source service. Please provide either 'user_manadgement' or 'planning' as the source service.")
-        if source_service == "user_manadgement" and not request_type in ["group_addition", "group_removal"]:
+        if not source_service in ["user_management", "planning"]:
+            raise ValueError("Invalid source service. Please provide either 'user_management' or 'planning' as the source service.")
+        if source_service == "user_management" and not request_type in ["group_addition", "group_removal"]:
             raise ValueError("Invalid request type. Please provide either 'group_addition' or 'group_removal' as the request type.")
         if source_service == "planning" and not request_type in ['event_invitation', 'event_cancellation']:
             raise ValueError("Invalid request type. Please provide either 'event_invitation' or 'event_cancellation' as the request type.")

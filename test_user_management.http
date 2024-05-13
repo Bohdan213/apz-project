@@ -3,9 +3,9 @@ POST http://localhost:8000/api/v1/user_management_service/add_user
 Content-Type: application/json
 
 {
-  "user_name": "test_user_3",
+  "user_name": "test_user_2",
   "password": "password",
-  "email": "fedia@gmail.com"
+  "email": "bogdanpeleh@gmail.com"
 }
 
 
@@ -15,7 +15,7 @@ GET http://localhost:8000/api/v1/user_management_service/authenticate
 Content-Type: application/json
 
 {
-  "user_name": "test_user_3",
+  "user_name": "test_user_2",
   "password": "password"
 }
 
@@ -24,8 +24,8 @@ POST http://localhost:8000/api/v1/user_management_service/create_group
 Content-Type: application/json
 
 {
-  "user_token": "e388eb2b-6510-4a75-93ce-bf27f94e1dd1",
-  "group_name": "New_Group_1",
+  "user_token": "33b80477-8201-4808-bd9a-f1eec5e73cb9",
+  "group_name": "New_Group_12",
   "users_list": [
     "test_user_1",
     "test_user_2"

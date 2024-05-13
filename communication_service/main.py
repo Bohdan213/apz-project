@@ -21,10 +21,10 @@ if __name__ == "__main__":
     service_id = f"communication_service_{service_num}"
     consul_client.agent.service.register(f"communication_service", port=6100+int(service_num), service_id=service_id)
     
-    hz_config = get_config(consul_client, "hazelcast_config")
+    hz_config = get_config(consul_client, "consul-dev/hazelcast_config")
     hz_client = get_client(hz_config)
 
-    communication = CommunicationService(QueueReader(hz_client.get_queue("communication").blocking()))
+    communication = CommunicationService(QueueReader(hz_client.get_queue(hz_config["message_queue"]).blocking()))
     threading.Thread(target=communication.start).start()
 
     while True:

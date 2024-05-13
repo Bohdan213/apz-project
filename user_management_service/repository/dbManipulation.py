@@ -6,15 +6,21 @@ class communicateWithDB:
 
     @staticmethod
     def add_user(user_name, password, email):
-        user = User(user_name=user_name, password=password, email=email, user_token=str(uuid.uuid4()))
-        db.session.add(user)
-        db.session.commit()
-        return user.user_token
+        try:
+            user = User(user_name=user_name, password=password, email=email, user_token=str(uuid.uuid4()))
+            db.session.add(user)
+            db.session.commit()
+            return user.user_token
+        except Exception as e:
+            return f"Error: {e}"
 
     @staticmethod
     def get_user(user_name):
-        user = User.query.filter_by(user_name=user_name).first()
-        return user
+        try:
+            user = User.query.filter_by(user_name=user_name).first()
+            return user
+        except Exception as e:
+            return f"Error: {e}"
 
     @staticmethod
     def create_group(creator_token, group_name, users_list):

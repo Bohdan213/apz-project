@@ -1,6 +1,5 @@
 from user_management_service.repository.dbManipulation import communicateWithDB
 from global_classes import User, Request
-from communication_service.controllers.queue import QueueWriter
 from user_management_service import queue_writer
 
 class UserGroupNotifier:

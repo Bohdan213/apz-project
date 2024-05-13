@@ -54,7 +54,7 @@ class PlanningService(Resource):
         return None
 
     def get(self, operation=None):
-        if operation == "view_events_usÍer_name":
+        if operation == "view_events_user_name":
             args = self.view_events_user_name_parser.parse_args()
             user_name = args['user_name']
             events = GetService.view_events_user_name(user_name)

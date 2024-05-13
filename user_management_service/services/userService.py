@@ -1,5 +1,5 @@
 from user_management_service.repository.dbManipulation import communicateWithDB
-from messageCommunication import UserGroupNotifier
+from user_management_service.services.messageCommunication import UserGroupNotifier
 
 class PostService:
 
