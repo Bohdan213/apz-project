@@ -9,6 +9,7 @@ class PostService:
     def create_event(creator_token, group_token, event_description, users_list, group_name, event_time, event_name):
         event_id = communicateWithDB.create_event(creator_token, group_token, event_description,
                                                   users_list, group_name, event_time, event_name)
+        print(event_id)
         event_info = communicateWithDB.get_event_info(event_id)
         if event_info is None:
             return {"result": "something went wrong, event not created"}, 400

@@ -45,12 +45,12 @@ class communicateWithDB:
             "event_time": event_time,
             "event_name": event_name
         }
-        try:
-            inserted_event = events_collection.insert_one(event_data)
-            return str(inserted_event.inserted_id)
-        except Exception as e:
-            print(e)
-            return None
+        # try:
+        inserted_event = events_collection.insert_one(event_data)
+        return str(inserted_event.inserted_id)
+        # except Exception as e:
+        #     print(e)
+        #     return None
 
     @staticmethod
     def cancel_event(user_token, event_token):

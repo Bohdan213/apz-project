@@ -8,4 +8,4 @@ api_facade.add_resource(FacadeService, '/api/v1/facade_service/<string:operation
 if __name__ == "__main__":
     service_id = f"facade_service"
     consul_client.agent.service.register("facade_service", port=8080, service_id=service_id)
-    app_facade.run(port=8080)
+    app_facade.run(port=8080, processes=4, threaded=False)
