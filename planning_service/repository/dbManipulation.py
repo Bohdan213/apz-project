@@ -45,13 +45,19 @@ class communicateWithDB:
             "event_time": event_time,
             "event_name": event_name
         }
-        inserted_event = events_collection.insert_one(event_data)
-        return str(inserted_event.inserted_id)
+        try:
+            inserted_event = events_collection.insert_one(event_data)
+            return str(inserted_event.inserted_id)
+        except Exception as e:
+            print(e)
+            return None
 
     @staticmethod
     def cancel_event(user_token, event_token):
+        if not ObjectId.is_valid(event_token): return None
         event = events_collection.find_one({"_id": ObjectId(event_token)})
-        if event and event["creator_token"] == user_token:
+        if not event: return None
+        if event["creator_token"] == user_token:
             events_collection.delete_one({"_id": ObjectId(event_token)})
             return True
         return False
@@ -59,24 +65,30 @@ class communicateWithDB:
     @staticmethod
     def view_user_events(user_name):
         events = events_collection.find({"users_list.user_name": user_name})
+        if not events: return None
         event_tuples = [(str(event["_id"]), event["description"]) for event in events]
         return event_tuples
 
     @staticmethod
     def view_events_group(group_token):
         events = events_collection.find({"group_token": group_token})
+        if not events: return None
         event_tuples = [(str(event["_id"]), event["description"]) for event in events]
         return event_tuples
 
     @staticmethod
     def view_events_creator(user_token):
         events = events_collection.find({"creator_token": user_token})
+        if not events: return None
         event_tuples = [(str(event["_id"]), event["description"]) for event in events]
         return event_tuples
 
     @staticmethod
     def get_event_info(event_token):
+        if not ObjectId.is_valid(event_token): return None
         event = events_collection.find_one({"_id": ObjectId(event_token)})
+        if not event:
+            return None
         event["event_id"] = str(event["_id"])
         del event["_id"]
         del event["creator_token"]

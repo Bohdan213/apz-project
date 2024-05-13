@@ -119,16 +119,18 @@ class FacadeService(Resource):
             group_token = args['group_token']
             user_name = args['user_name']
             creator_token = args['user_token']
-            print(PostService.add_user_to_group(group_token, user_name, creator_token))
-            return "added", 200
+            res = PostService.add_user_to_group(group_token, user_name, creator_token)
+            print(res)
+            return res
 
         elif operation == "delete_user_from_group":
             args = self.add_user_to_group_parser.parse_args()
             group_token = args['group_token']
             user_name = args['user_name']
             user_token = args['user_token']
-            print(PostService.delete_user_from_group(group_token, user_name, user_token))
-            return "deleted", 200
+            res = PostService.delete_user_from_group(group_token, user_name, user_token)
+            print(res)
+            return res
 
         elif operation == "add_user":
             args = self.add_user_parser.parse_args()
@@ -158,14 +160,16 @@ class FacadeService(Resource):
             args = self.group_token_parser.parse_args()
             group_token = args['group_token']
             user_token = args['user_token']
-            print(DeleteService.delete_group(group_token, user_token))
-            return "deleted", 200
+            res = DeleteService.delete_group(group_token, user_token)
+            print(res)
+            return res
 
         elif operation == "delete_user":
             args = self.delete_user_parser.parse_args()
             user_token = args['user_token']
-            print(DeleteService.delete_user(user_token))
-            return "user_deleted", 200
+            res = DeleteService.delete_user(user_token)
+            print(res)
+            return res
         
         elif operation == "cancel_event":
             args = self.delete_parser.parse_args()
