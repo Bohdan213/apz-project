@@ -21,7 +21,8 @@ class UserGroupNotifier:
     def __init__(self, user_names: list, group_name: str):
         self.user_names = user_names
         self.group_name = group_name
-        self.user_emails = [communicateWithDB.get_user(user_name).email for user_name in user_names]
+        self.users = [communicateWithDB.get_user(user_name) for user_name in user_names]
+        self.user_emails = [user.email for user in self.users if user is not None]
         self.users_list = [User(user_name, user_email) for user_name, user_email in zip(self.user_names, self.user_emails)]
         self.queue_writer = queue_writer
     

@@ -5,7 +5,7 @@ Content-Type: application/json
 {
   "user_name": "test_user_2",
   "password": "password",
-  "email": "bogdanpeleh@gmail.com"
+  "email": "pelehbog@gmail.com"
 }
 
 
@@ -24,10 +24,9 @@ POST http://localhost:8000/api/v1/user_management_service/create_group
 Content-Type: application/json
 
 {
-  "user_token": "33b80477-8201-4808-bd9a-f1eec5e73cb9",
-  "group_name": "New_Group_12",
+  "user_token": "c4691cba-0754-400c-9488-4b323b8ef44c",
+  "group_name": "New_Group_2",
   "users_list": [
-    "test_user_1",
     "test_user_2"
   ]
 }
@@ -37,9 +36,9 @@ POST http://localhost:8000/api/v1/user_management_service/add_user_to_group
 Content-Type: application/json
 
 {
-  "group_token": "8fe36221-ef56-4424-aa2c-37ef995f6684",
+  "group_token": "dfdfefa0-a8e0-4ab2-8e7a-b816eec8b41c",
   "user_name": "test_user_3",
-  "user_token": "e388eb2b-6510-4a75-93ce-bf27f94e1dd1"
+  "user_token": "c4691cba-0754-400c-9488-4b323b8ef44c"
 }
 
 ### Delete User from Group
@@ -47,9 +46,9 @@ POST http://localhost:8000/api/v1/user_management_service/delete_user_from_group
 Content-Type: application/json
 
 {
-  "group_token": "8fe36221-ef56-4424-aa2c-37ef995f6684",
+  "group_token": "dfdfefa0-a8e0-4ab2-8e7a-b816eec8b41c",
   "user_name": "test_user_3",
-  "user_token": "e388eb2b-6510-4a75-93ce-bf27f94e1dd1"
+  "user_token": "c4691cba-0754-400c-9488-4b323b8ef44c"
 }
 
 ### Delete Group
@@ -57,8 +56,8 @@ DELETE http://localhost:8000/api/v1/user_management_service/delete_group
 Content-Type: application/json
 
 {
-  "group_token": "8fe36221-ef56-4424-aa2c-37ef995f6684",
-  "user_token": "e388eb2b-6510-4a75-93ce-bf27f94e1dd1"
+  "group_token": "dfdfefa0-a8e0-4ab2-8e7a-b816eec8b41c",
+  "user_token": "c4691cba-0754-400c-9488-4b323b8ef44c"
 }
 
 ### Delete User
@@ -74,7 +73,7 @@ GET http://localhost:8000/api/v1/user_management_service/get_group_users
 Content-Type: application/json
 
 {
-  "group_token": "8fe36221-ef56-4424-aa2c-37ef995f6684"
+  "group_token": "dfdfefa0-a8e0-4ab2-8e7a-b816eec8b41c"
 }
 
 ### Check User Existence
@@ -82,5 +81,5 @@ GET http://localhost:8000/api/v1/user_management_service/user_existance
 Content-Type: application/json
 
 {
-  "user_name": "test_user_3"
+  "user_name": "test_user_2"
 }

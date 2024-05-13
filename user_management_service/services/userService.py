@@ -51,9 +51,12 @@ class PostService:
         Returns:
             bool: True if the user was successfully added to the group, False otherwise.
         """
-        notifier = UserGroupNotifier([user_name], communicateWithDB.get_group(group_token).group_name)
+        group = communicateWithDB.get_group(group_token)
+        if group is None:
+            return "Group does not exist", 400
+        notifier = UserGroupNotifier([user_name], group.group_name)
         notifier.notify_addition()
-        return communicateWithDB.add_user_to_group(group_token, user_name, creator_token)
+        return communicateWithDB.add_user_to_group(group_token, user_name, creator_token), 200
 
     @staticmethod
     def delete_user_from_group(group_token, user_name, creator_token):
@@ -68,6 +71,9 @@ class PostService:
         Returns:
             bool: True if the user was successfully deleted from the group, False otherwise.
         """
+        group = communicateWithDB.get_group(group_token)
+        if group is None:
+            return "Group does not exist", 400
         notifier = UserGroupNotifier([user_name], communicateWithDB.get_group(group_token).group_name)
         notifier.notify_removal()
         return communicateWithDB.delete_user_from_group(group_token, user_name, creator_token)
@@ -135,6 +141,8 @@ class GetService:
             bool: True if the user exists, False otherwise.
         """
         user = communicateWithDB.get_user(user_name)
+        if user is None:
+            print(f"User with name: {user_name} does not exist")
         return user is not None
 
 
@@ -173,7 +181,10 @@ class DeleteService:
             Returns:
                 bool: True if the group was successfully deleted, False otherwise.
             """
-            
-            notifier = UserGroupNotifier(communicateWithDB.get_group_users(group_token), communicateWithDB.get_group(group_token).group_name)
+            group = communicateWithDB.get_group(group_token)
+            if group is None:
+                return "Group does not exist", 400
+            group_users = group.users_list
+            notifier = UserGroupNotifier(group_users, group.group_name)
             notifier.notify_removal()
             return communicateWithDB.delete_group(group_token, creator_token)

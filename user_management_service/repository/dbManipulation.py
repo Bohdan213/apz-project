@@ -52,6 +52,7 @@ class communicateWithDB:
         """
         try:
             user = User.query.filter_by(user_name=user_name).first()
+
             return user
         except Exception as e:
             return f"Error: {e}"
@@ -263,6 +264,8 @@ class communicateWithDB:
         """
         try:
             user = User.query.filter_by(user_token=user_token).first()
+            if user is None:
+                return f"User with token: {user_token} does not exist", 400
             db.session.delete(user)
             db.session.commit()
             return f"User with token: {user_token} deleted"
