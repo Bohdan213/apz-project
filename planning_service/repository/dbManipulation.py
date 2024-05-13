@@ -54,6 +54,7 @@ class communicateWithDB:
 
     @staticmethod
     def cancel_event(user_token, event_token):
+        if not ObjectId.is_valid(event_token): return None
         event = events_collection.find_one({"_id": ObjectId(event_token)})
         if not event: return None
         if event["creator_token"] == user_token:
@@ -84,6 +85,7 @@ class communicateWithDB:
 
     @staticmethod
     def get_event_info(event_token):
+        if not ObjectId.is_valid(event_token): return None
         event = events_collection.find_one({"_id": ObjectId(event_token)})
         if not event:
             return None
