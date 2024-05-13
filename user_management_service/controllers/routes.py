@@ -3,6 +3,23 @@ from flask_restful import Resource, reqparse
 from user_management_service.services.userService import PostService, GetService, DeleteService
 
 class UserManagementService(Resource):
+    """
+    Represents a user management service.
+
+    This class handles various operations related to user management, such as authentication, group creation,
+    adding users to groups, deleting users and groups, and more.
+
+    Attributes:
+        auth_parser (RequestParser): Parser for authentication endpoint.
+        group_parser (RequestParser): Parser for group creation endpoint.
+        group_token_parser (RequestParser): Parser for group token endpoint.
+        add_user_to_group_parser (RequestParser): Parser for adding user to group endpoint.
+        add_user_parser (RequestParser): Parser for adding user endpoint.
+        delete_user_parser (RequestParser): Parser for deleting user endpoint.
+        group_users_parser (RequestParser): Parser for getting group users endpoint.
+        user_existance_parser (RequestParser): Parser for checking user existence endpoint.
+    """
+
     def __init__(self):
         # Existing parsers
         self.auth_parser = reqparse.RequestParser()
@@ -40,6 +57,18 @@ class UserManagementService(Resource):
         self.user_existance_parser.add_argument('user_name', required=True, help="Username is required")
 
     def get(self, operation):
+        """
+        Handles GET requests for different operations.
+
+        Args:
+            operation (str): The operation to perform.
+
+        Returns:
+            dict: The response data.
+
+        Raises:
+            KeyError: If the operation is not supported.
+        """
         if operation == "authenticate":
             args = self.auth_parser.parse_args()
             user_name = args['user_name']
@@ -62,6 +91,18 @@ class UserManagementService(Resource):
             return {'exists': user_exists}, 200
 
     def post(self, operation):
+        """
+        Handles POST requests for different operations.
+
+        Args:
+            operation (str): The operation to perform.
+
+        Returns:
+            dict: The response data.
+
+        Raises:
+            KeyError: If the operation is not supported.
+        """
         if operation == "create_group":
             args = self.group_parser.parse_args()
             user_token = args['user_token']
@@ -96,6 +137,18 @@ class UserManagementService(Resource):
             return {'user_token': user_token}, 201
 
     def delete(self, operation):
+        """
+        Handles DELETE requests for different operations.
+
+        Args:
+            operation (str): The operation to perform.
+
+        Returns:
+            str: The response message.
+
+        Raises:
+            KeyError: If the operation is not supported.
+        """
         if operation == "delete_group":
             args = self.group_token_parser.parse_args()
             group_token = args['group_token']

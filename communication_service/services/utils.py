@@ -3,6 +3,16 @@ import json
 
 
 def get_config(consul_client, config_name):
+    """
+    Retrieve the configuration from Consul for the given config_name.
+
+    Args:
+        consul_client (Consul): The Consul client object.
+        config_name (str): The name of the configuration to retrieve.
+
+    Returns:
+        dict: The configuration as a dictionary, or None if no valid configuration is found.
+    """
     index, hazelcast_config = consul_client.kv.get(config_name)
 
     if hazelcast_config and "Value" in hazelcast_config:
@@ -15,6 +25,19 @@ def get_config(consul_client, config_name):
 
 
 def get_client(hazelcast_config):
+    """
+    Get a Hazelcast client based on the provided configuration.
+
+    Args:
+        hazelcast_config (dict): The Hazelcast configuration containing the cluster name, cluster members, and lifecycle listeners.
+
+    Returns:
+        hazelcast.HazelcastClient: The Hazelcast client instance.
+
+    Raises:
+        ValueError: If the hazelcast_config is None or invalid.
+
+    """
     if hazelcast_config is None:
         raise ValueError("Invalid or missing Hazelcast configuration.")
 

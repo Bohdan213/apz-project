@@ -4,6 +4,16 @@ from planning_service.services.planningService import PostService, GetService
 
 
 class PlanningService(Resource):
+    """
+    This class represents the Planning Service resource.
+
+    Attributes:
+        post_parser (RequestParser): The request parser for POST requests.
+        delete_parser (RequestParser): The request parser for DELETE requests.
+        view_events_user_name_parser (RequestParser): The request parser for GET requests to view events by user name.
+        view_events_group_parser (RequestParser): The request parser for GET requests to view events by group.
+        view_events_creator_parser (RequestParser): The request parser for GET requests to view events by creator.
+    """
 
     def __init__(self):
         self.post_parser = reqparse.RequestParser()
@@ -30,6 +40,15 @@ class PlanningService(Resource):
 
 
     def post(self, operation=None):
+        """
+        Handles POST requests.
+
+        Args:
+            operation (str, optional): The operation to perform. Defaults to None.
+
+        Returns:
+            dict: The response data.
+        """
         if operation == "create_event":
             args = self.post_parser.parse_args()
             user_token = args['user_token']
@@ -46,6 +65,15 @@ class PlanningService(Resource):
         return None
 
     def delete(self, operation=None):
+        """
+        Handles DELETE requests.
+
+        Args:
+            operation (str, optional): The operation to perform. Defaults to None.
+
+        Returns:
+            dict: The response data.
+        """
         if operation == "cancel_event":
             args = self.delete_parser.parse_args()
             user_token = args['user_token']
@@ -54,6 +82,15 @@ class PlanningService(Resource):
         return None
 
     def get(self, operation=None):
+        """
+        Handles GET requests.
+
+        Args:
+            operation (str, optional): The operation to perform. Defaults to None.
+
+        Returns:
+            dict: The response data.
+        """
         if operation == "view_events_user_name":
             args = self.view_events_user_name_parser.parse_args()
             user_name = args['user_name']
