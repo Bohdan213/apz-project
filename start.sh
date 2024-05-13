@@ -23,13 +23,17 @@ fi
 
 docker-compose -f mongo-cluster.yml up -d
 
-docker exec -it mongo1 mongosh --eval "rs.initiate({
-  _id: 'rs0',
+sleep 10
+
+docker exec -it mongo1 mongosh --eval '
+rs.initiate({
+  _id: "rs0",
   members: [
-    { _id: 0, host: 'mongo1:27017' },
-    { _id: 1, host: 'mongo2:27017' }
+    { _id: 0, host: "mongo1:27017" },
+    { _id: 1, host: "mongo2:27017" }
   ]
-})"
+});
+'
 
 docker run --name apz-project-postgres \
   -e POSTGRES_USER=admin_user \
