@@ -1,0 +1,9 @@
+### Add User
+POST http://localhost:8080/api/v1/facade_service/add_user
+Content-Type: application/json
+
+{
+  "user_name": "test_user_2",
+  "password": "password",
+  "email": "pelehbog@gmail.com"
+}
