@@ -15,7 +15,7 @@ queue_writer = QueueWriter(messages_queue)
 app_user_management = Flask(__name__)
 api_user_management = Api(app_user_management)
 
-app_user_management.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+psycopg2://admin_user:admin_password@localhost:5432/apz_database"
+app_user_management.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+psycopg2://admin_user:admin_password@192.168.1.101:5432/apz_database"
 
 db = SQLAlchemy(app_user_management)
 

@@ -9,6 +9,6 @@ RUN pip install hazelcast-python-client==5.3.0
 
 COPY . .
 
-EXPOSE ${PORT:-8080}
+EXPOSE ${6101:-6101}
 
-CMD ["python", "-m", "facade_service.main"]
+CMD python -m communication_service.main 1
