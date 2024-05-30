@@ -10,7 +10,7 @@ fi
 sleep 5
 
 #host_ip=$(hostname -I | cut -d' ' -f1)
-host_ip=10.10.224.187
+host_ip=192.168.1.101
 docker exec consul-dev consul kv put consul-dev/hazelcast_config "{\"cluster_name\": \"hazelcast-cluster\", \"cluster_members\": [\"$host_ip:5701\", \"$host_ip:5702\"], \"message_queue\": \"message_queue\"}"
 
 if [ ! "$(docker ps -q -f name=node-1)" ]; then

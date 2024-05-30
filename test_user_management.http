@@ -24,8 +24,8 @@ POST http://localhost:8000/api/v1/user_management_service/create_group
 Content-Type: application/json
 
 {
-  "user_token": "c4691cba-0754-400c-9488-4b323b8ef44c",
-  "group_name": "New_Group_2",
+  "user_token": "74c521da-70c4-4425-8ffe-fe12d843d3b0",
+  "group_name": "New_Group_1",
   "users_list": [
     "test_user_2"
   ]
@@ -36,7 +36,7 @@ POST http://localhost:8000/api/v1/user_management_service/add_user_to_group
 Content-Type: application/json
 
 {
-  "group_token": "dfdfefa0-a8e0-4ab2-8e7a-b816eec8b41c",
+  "group_token": "b02e2ea0-2ebc-4e55-aaee-f58593a99044",
   "user_name": "test_user_3",
   "user_token": "c4691cba-0754-400c-9488-4b323b8ef44c"
 }

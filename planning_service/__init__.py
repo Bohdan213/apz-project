@@ -4,7 +4,7 @@ import consul
 from planning_service.services.utils import get_config, get_client
 
 
-consul_client = consul.Consul()
+consul_client = consul.Consul(host="192.168.1.101")
 
 hazelcast_config = get_config(consul_client, "consul-dev/hazelcast_config")
 hazelcast_client = get_client(hazelcast_config)

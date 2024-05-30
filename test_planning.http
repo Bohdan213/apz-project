@@ -18,7 +18,7 @@ Content-Type: application/json
 
 {
   "user_token": "example_user_token",
-  "event_token": "6640e579f6ff7d9ae7c08898"
+  "event_token": "6642a32ad490b0cf13ada0c8"
 }
 
 ### View Events by User Name

@@ -5,4 +5,3 @@ python-consul
 hazelcast
 psycopg2
 pymongo
-gunicorn
